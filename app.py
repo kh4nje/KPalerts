@@ -10,25 +10,25 @@ st.set_page_config(page_title="Outbreak Alert System", layout="wide")
 st.title("🩺 Outbreak Alert System")
 st.markdown("Upload your weekly surveillance data (XLSX format) to generate alerts based on seasonal thresholds.")
 
-# Load thresholds from GitHub (replace with your repo's raw URL once uploaded)
+# Load thresholds from GitHub raw URL
 @st.cache_data
 def load_thresholds(github_url):
     try:
         thresholds_df = pd.read_csv(github_url)
         return thresholds_df
     except Exception as e:
-        st.error(f"Error loading thresholds: {e}")
+        st.error(f"Error loading thresholds from GitHub: {e}. Check if the CSV is uploaded correctly.")
         return None
 
-# GitHub raw URL for thresholds CSV (update this after uploading to your repo)
-THRESHOLDS_URL = "https://raw.githubusercontent.com/yourusername/yourrepo/main/seasonal_thresholds.csv"  # Replace with actual URL
+# Your GitHub raw URL for thresholds CSV
+THRESHOLDS_URL = "https://raw.githubusercontent.com/kh4nje/KPalerts/main/seasonal_thresholds.csv"
 
 # Load thresholds
 thresholds = load_thresholds(THRESHOLDS_URL)
 if thresholds is None:
     st.stop()
 
-st.success(f"Thresholds loaded: {len(thresholds)} rows")
+st.success(f"Thresholds loaded successfully: {len(thresholds)} rows from GitHub")
 
 # Sidebar for params
 st.sidebar.header("Alert Parameters")
